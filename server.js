@@ -2,6 +2,7 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 const pug = require('pug');
 const http = require('http');
+require('dotenv').config({path : './config/.env'})
 
 const menuItems = [
     { path: '/', title: 'Home', isActive: true },
@@ -94,7 +95,6 @@ server.on('request', (request,response) => {
 });
 
 
-const PORT = process.env.PORT || 2000;
-server.listen(PORT, () => {
-    console.log(`Server has been started on ${PORT}...`);
+server.listen(process.env.APP_PORT,process.env.APP_HOSTNAME,()=>{
+    console.log(`Server running at http://${process.env.APP_HOSTNAME}:${process.env.APP_PORT}`);
 });
