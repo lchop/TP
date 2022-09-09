@@ -1,0 +1,9 @@
+h1 DELETE STUDENTS 
+ul
+    for item in students
+        li
+            p= item.name
+            p= item.birth
+            form( action="/delete" method="post")
+                input(type="text", name="name", value=item.name, placeholder="name" hidden)
+                input(type="submit" value="delete")

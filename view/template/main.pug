@@ -1,0 +1,9 @@
+form( action="/" method="post")
+    input(type="text", name="name", value="", placeholder="name")
+    input(type="date", name="date", value="", placeholder="date")
+    input(type="submit" value="add")
+ul
+    for item in students
+        li
+            p= item.name
+            p= item.birth
