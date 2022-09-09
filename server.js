@@ -1,4 +1,3 @@
-const fs = require('fs');
 const dayjs = require('dayjs');
 const pug = require('pug');
 const http = require('http');
@@ -40,14 +39,13 @@ server.on('request', (request,response) => {
                     if (birth !== '' && name !== '' && !students.find((student)=> student.name == name)){
                         students.push({name: name, birth:formatDate(birth)});
                     }
-                    response.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
+                    response.writeHead(301, {Location: `http://${process.env.APP_HOSTNAME}:${process.env.APP_PORT}`});
                     response.end();
                 });
             }
             try {
                 const renderTemplate = pug.compileFile(`./view/template/layout.pug`,  { pretty: true });
                 const result = renderTemplate({
-                    title: 'Students list',
                     students,
                     menuItems
                     });
@@ -62,7 +60,6 @@ server.on('request', (request,response) => {
             break;
         case '/delete':
             if(request.method === 'POST'){
-                console.log('test');
                 let data = '';
                 request.on('data', chunk => {
                     data+=chunk;
@@ -70,14 +67,13 @@ server.on('request', (request,response) => {
                 request.on('end', () => {
                     let name = data.split('=')[1];
                     students = students.filter((item) => item.name != name);
-                    response.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
+                    response.writeHead(301, {Location: `http://${process.env.APP_HOSTNAME}:${process.env.APP_PORT}/delete`});
                     response.end();
                 });
             }
             try {
                 const renderTemplate = pug.compileFile(`./view/template/delete.pug`,  { pretty: true });
                 const result = renderTemplate({
-                    title: 'Delete student',
                     students,
                     menuItems
                     });
